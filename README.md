@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StackClinic
 
-## Getting Started
+One-page site for **StackClinic** — a solo-run, productised services studio that
+audits and fixes SaaS products: cold email systems, security audits, and
+infrastructure cost cuts.
 
-First, run the development server:
+Next.js 14 (App Router) · TypeScript · Tailwind · framer-motion · Lenis. Static,
+no database, deploys to Vercel.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Design system (LOCKED)
+
+The visual contract lives in two places and nothing should diverge from it:
+
+- **`app/globals.css`** — CSS custom properties: the single source of truth for
+  colour, spacing, and the reduced-motion rules.
+- **`tailwind.config.ts`** — a thin, typed view over those variables so markup
+  uses tokens (`bg-ground`, `text-dim`, `text-severity-critical`) not raw hex.
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `--ground` | `#0E1A24` | page background (never pure black) |
+| `--surface` | `#142430` | cards / panels |
+| `--text` | `#E8EEF2` | primary text |
+| `--text-dim` | `#8FA3B0` | muted text |
+| `--severity-critical` | `#FF4D4D` | critical severity |
+| `--severity-warn` | `#FFB224` | warning severity · **primary accent** |
+| `--severity-pass` | `#3DDC97` | pass severity · scanline trace |
+
+- **Fonts** (`next/font/google`): IBM Plex Sans (400/600/700) for headings/body,
+  IBM Plex Mono (400/500) for **all numerals, prices, labels, badges, timestamps
+  and data readouts**. Headlines are 700, `tracking-tight`.
+- **Spacing**: max content width `1100px` (`max-w-content`); section padding
+  `8rem` desktop / `4rem` mobile (`.section-y`).
+- **No gradients anywhere.** Flat tokens only.
+
+## Motion
+
+- `components/SmoothScroll.tsx` runs **Lenis** smooth scrolling and wraps the app
+  in framer-motion `MotionConfig reducedMotion="user"`.
+- `lib/useReducedMotion.ts` — SSR-safe `prefers-reduced-motion` hook. When the
+  user asks for reduced motion, **Lenis never instantiates** and every animated
+  component (`Reveal`, `Scanline`) renders its static state.
+
+## Reusable components
+
+- **`<Scanline />`** — 1.5px ECG-style SVG divider in severity-pass green that
+  draws left-to-right on scroll-into-view, with a pulse blip at the R-peak.
+- **`<SeverityBadge level="critical|warn|pass">`** — small-caps mono badge with a
+  coloured dot indicator. Falls back to the level name; pass children to override.
+
+## Structure
+
+```
+app/                 layout (fonts, metadata), globals.css, page.tsx
+components/           SmoothScroll, Reveal, Scanline, SeverityBadge
+components/sections/  Nav, Hero, Services, Process, Operator, Contact
+lib/                  useReducedMotion, offers (copy source of truth)
+offers.md            original offer copy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Develop
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run dev     # http://localhost:3000
+npm run build   # production build (fully static)
+npm run lint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Zero-config on **Vercel** — import the repo, accept the Next.js defaults, ship.

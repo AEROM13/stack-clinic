@@ -2,26 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  ============================================================
+  STACKCLINIC DESIGN SYSTEM — LOCKED
+  These tokens are the single source of truth. Every component
+  derives from them. Do not introduce new colors, gradients, or
+  font families outside this contract.
+  ============================================================
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces — never pure black */
+  --ground: #0e1a24; /* deep slate-blue page background */
+  --surface: #142430; /* cards / raised panels */
+
+  /* Text */
+  --text: #e8eef2; /* primary text */
+  --text-dim: #8fa3b0; /* secondary / muted text */
+
+  /* Severity scale (also the accent system) */
+  --severity-critical: #ff4d4d;
+  --severity-warn: #ffb224; /* phosphor amber — PRIMARY ACCENT */
+  --severity-pass: #3ddc97;
+
+  /* Semantic alias */
+  --accent: var(--severity-warn);
+
+  /* Hairline borders derived from text at low alpha */
+  --border: rgba(143, 163, 176, 0.16);
+  --border-strong: rgba(143, 163, 176, 0.28);
+
+  /* Layout */
+  --content-max: 1100px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    background-color: var(--ground);
+    color-scheme: dark;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background-color: var(--ground);
+    color: var(--text);
+    font-family: var(--font-plex-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* All numerals, prices, labels, badges, timestamps and data
+     readouts use Plex Mono. Apply via .mono / font-mono. */
+  ::selection {
+    background-color: var(--severity-warn);
+    color: var(--ground);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-plex-sans), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em; /* tracking-tight */
+    line-height: 1.05;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Tabular mono readout — numbers, prices, codes */
+  .mono {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  /* Standard section rhythm: 4rem mobile / 8rem desktop */
+  .section-y {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  @media (min-width: 768px) {
+    .section-y {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+}
+
+/* When Lenis drives scrolling it adds .lenis to <html>. Native
+   smooth-scroll must be disabled so the two don't fight. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Respect the user. Kill non-essential motion entirely. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
