@@ -40,6 +40,8 @@
   html {
     background-color: var(--ground);
     color-scheme: dark;
+    /* keep anchored targets clear of the sticky 4rem nav */
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -104,6 +106,72 @@ html.lenis body {
   overflow: hidden;
 }
 
+/*
+  ============================================================
+  MICRO-INTERACTIONS — shared, token-driven, motion-safe.
+  Defined after @tailwind utilities so they win on source order.
+  ============================================================
+*/
+
+/* 120ms tactile press-down for buttons. */
+.press {
+  transition:
+    transform 120ms ease-out,
+    opacity 120ms ease-out,
+    background-color 120ms ease-out,
+    border-color 120ms ease-out,
+    color 120ms ease-out,
+    box-shadow 120ms ease-out;
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Subtle amber focus ring (keyboard only), with a ground-coloured gap. */
+.ring-focus:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--ground),
+    0 0 0 4px var(--severity-warn);
+}
+
+/* Skip-to-content link: off-screen until focused, then docks top-left as an
+   amber chip above everything (nav is z-50). */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  border-radius: 0.375rem;
+  background-color: var(--accent);
+  color: var(--ground);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: transform 150ms ease-out;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Links: underline slides in from the left on hover/focus. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 200ms ease;
+  padding-bottom: 1px;
+}
+.link-underline:hover,
+.link-underline:focus-visible {
+  background-size: 100% 1px;
+}
+
 /* Respect the user. Kill non-essential motion entirely. */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -113,5 +181,9 @@ html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  /* No press-scale under reduced motion — state, not animation. */
+  .press:active {
+    transform: none;
   }
 }

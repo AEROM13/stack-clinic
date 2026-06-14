@@ -15,28 +15,28 @@ export function Nav() {
 
         <div className="hidden items-center gap-7 md:flex">
           <a
-            href="#operations"
-            className="font-mono text-xs uppercase tracking-[0.12em] text-dim transition-colors hover:text-text"
+            href="#offers"
+            className="ring-focus link-underline font-mono text-xs uppercase tracking-[0.12em] text-dim transition-colors hover:text-text"
           >
-            Operations
+            Offers
           </a>
           <a
-            href="#process"
-            className="font-mono text-xs uppercase tracking-[0.12em] text-dim transition-colors hover:text-text"
+            href="#proof"
+            className="ring-focus link-underline font-mono text-xs uppercase tracking-[0.12em] text-dim transition-colors hover:text-text"
           >
-            Process
+            Proof
           </a>
           <a
-            href="#operator"
-            className="font-mono text-xs uppercase tracking-[0.12em] text-dim transition-colors hover:text-text"
+            href="#faq"
+            className="ring-focus link-underline font-mono text-xs uppercase tracking-[0.12em] text-dim transition-colors hover:text-text"
           >
-            Operator
+            FAQ
           </a>
         </div>
 
         <a
           href="#book"
-          className="rounded-md border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.1em] text-accent transition-colors hover:bg-accent hover:text-ground"
+          className="press ring-focus rounded-md border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.1em] text-accent hover:bg-accent hover:text-ground"
         >
           Book a slot
         </a>

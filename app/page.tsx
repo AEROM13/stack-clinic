@@ -1,21 +1,27 @@
 import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
-import { Services } from "@/components/sections/Services";
+import { Offers } from "@/components/sections/Offers";
+import { Proof } from "@/components/sections/Proof";
 import { Process } from "@/components/sections/Process";
-import { Operator } from "@/components/sections/Operator";
-import { Contact } from "@/components/sections/Contact";
+import { Booking } from "@/components/sections/Booking";
+import { Faq } from "@/components/sections/Faq";
+import { Footer } from "@/components/sections/Footer";
 import { Scanline } from "@/components/Scanline";
 
 export default function Home() {
   return (
     <>
       <Nav />
-      <main>
+      <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <div className="px-5 sm:px-8">
           <Scanline />
         </div>
-        <Services />
+        <Offers />
+        <div className="px-5 sm:px-8">
+          <Scanline />
+        </div>
+        <Proof />
         <div className="px-5 sm:px-8">
           <Scanline />
         </div>
@@ -23,11 +29,15 @@ export default function Home() {
         <div className="px-5 sm:px-8">
           <Scanline />
         </div>
-        <Operator />
+        <Booking />
         <div className="px-5 sm:px-8">
           <Scanline />
         </div>
-        <Contact />
+        <Faq />
+        <div className="px-5 sm:px-8">
+          <Scanline />
+        </div>
+        <Footer />
       </main>
     </>
   );
