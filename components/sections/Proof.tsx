@@ -6,7 +6,7 @@ import { Reveal } from "@/components/Reveal";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 
 /* TODO: replace with the real figures (pasting tonight). */
-const PROOF_REPLY_RATE = 4; // % — placeholder
+const PROOF_REPLY_RATE = 9; // % — placeholder
 const PROOF_COST_CUT = 85; // % — placeholder
 
 /**

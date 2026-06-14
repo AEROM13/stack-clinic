@@ -1,5 +1,5 @@
 /* Replace with the live X profile before launch. */
-const X_PROFILE_URL = "https://x.com/saasshiper";
+const X_PROFILE_URL = "https://x.com/saasshipper";
 const CONTACT_EMAIL = "hello@leadsnipe.co.uk";
 
 export function Footer() {
